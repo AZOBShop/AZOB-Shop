@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - AZOB SHOP</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .payment-section { margin: 30px auto; max-width: 500px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 16px; }
+    .payment-option { display: flex; align-items: center; margin: 15px 0; padding: 15px; background: rgba(255,255,255,0.08); border-radius: 12px; cursor: pointer; }
+    .payment-option input { margin-right: 15px; }
+    .payment-option label { display: flex; align-items: center; width: 100%; font-size: 1.1rem; }
+    .payment-logo { width: 60px; height: auto; margin-right: 15px; border-radius: 8px; }
+    .instructions { display: none; margin-top: 20px; padding: 15px; background: rgba(26,188,156,0.1); border-radius: 12px; color: #e0f7fa; }
+    .instructions.show { display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="center">
+    <h2>Checkout</h2>
+    <p style="margin: 20px 0; opacity: 0.9;">আপনার অর্ডার সম্পূর্ণ করতে পেমেন্ট মেথড সিলেক্ট করুন</p>
+  </div>
+
+  <form id="checkoutForm" class="payment-section">
+    <input type="text" placeholder="Full Name" required style="width:100%; padding:14px; margin:10px 0; border-radius:8px; border:none;"><br>
+    <input type="text" placeholder="Full Address" required style="width:100%; padding:14px; margin:10px 0; border-radius:8px; border:none;"><br>
+    <input type="tel" placeholder="Phone Number" required style="width:100%; padding:14px; margin:10px 0; border-radius:8px; border:none;"><br>
+    <input type="email" placeholder="Email (optional)" style="width:100%; padding:14px; margin:10px 0; border-radius:8px; border:none;"><br>
+
+    <h3 style="margin: 30px 0 15px; text-align:center;">Payment Method</h3>
+
+    <div class="payment-option">
+      <input type="radio" id="bkash" name="payment" value="bkash" required>
+      <label for="bkash">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/BKash-logo.svg/512px-BKash-logo.svg.png" alt="bKash" class="payment-logo">
+        bKash
+      </label>
+    </div>
+
+    <div class="payment-option">
+      <input type="radio" id="nagad" name="payment" value="nagad">
+      <label for="nagad">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Nagad-logo.svg/512px-Nagad-logo.svg.png" alt="Nagad" class="payment-logo">
+        Nagad
+      </label>
+    </div>
+
+    <div class="payment-option">
+      <input type="radio" id="rocket" name="payment" value="rocket">
+      <label for="rocket">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Rocket_DBBL_Logo.svg/512px-Rocket_DBBL_Logo.svg.png" alt="Rocket" class="payment-logo">
+        Rocket (DBBL)
+      </label>
+    </div>
+
+    <div class="payment-option">
+      <input type="radio" id="upay" name="payment" value="upay">
+      <label for="upay">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Upay_Logo.svg/512px-Upay_Logo.svg.png" alt="Upay" class="payment-logo">
+        Upay
+      </label>
+    </div>
+
+    <div id="instructions" class="instructions">
+      <p id="payment-instructions"></p>
+    </div>
+
+    <button type="submit" class="add-btn" style="width:100%; margin-top:30px; padding:15px; font-size:1.2rem;">Confirm Order & Pay</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('checkoutForm');
+    const radios = document.querySelectorAll('input[name="payment"]');
+    const instructionsDiv = document.getElementById('instructions');
+    const instructionsText = document.getElementById('payment-instructions');
+
+    radios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        const method = radio.value;
+        let text = '';
+
+        if (method === 'bkash') {
+          text = 'bKash নম্বর: 01XXXXXXXXX<br>পেমেন্ট করে সেন্ড মানি করুন এবং ট্রানজেকশন আইডি নোট করুন। অর্ডার প্লেস করার পর আমাদের সাপোর্টে ট্রানজেকশন আইডি পাঠান।';
+        } else if (method === 'nagad') {
+          text = 'Nagad নম্বর: 01XXXXXXXXX<br>পেমেন্ট করে ট্রানজেকশন আইডি সেভ করুন। অর্ডার কনফার্ম করার জন্য সাপোর্টে পাঠান।';
+        } else if (method === 'rocket') {
+          text = 'Rocket নম্বর: 01XXXXXXXXX<br>পেমেন্ট অপশন: Send Money → এবং ট্রানজেকশন নম্বর নোট করুন।';
+        } else if (method === 'upay') {
+          text = 'Upay নম্বর: 01XXXXXXXXX<br>পেমেন্ট করে রেফারেন্স নম্বর সেভ করুন।';
+        }
+
+        instructionsText.innerHTML = text;
+        instructionsDiv.classList.add('show');
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('অর্ডার প্লেস হয়েছে! আপনার সিলেক্ট করা পেমেন্ট মেথডে পেমেন্ট করে সাপোর্টে কনফার্ম করুন। ধন্যবাদ!');
+      // পরে backend-এ submit করতে পারো
+    });
+  </script>
+
+</body>
+</html>
